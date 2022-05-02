@@ -18,7 +18,7 @@ export class Server {
         this.charactersController = new CharacterController(new CharactersService())
     }
 
-    public async start (){
+    public start (){
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
 

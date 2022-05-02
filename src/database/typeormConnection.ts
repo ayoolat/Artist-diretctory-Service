@@ -14,7 +14,7 @@ export class TypeormConnection {
         try {
             return this.dbConnect =  await createConnection()
         }catch (e : any) {
-           console.log(e)
+           throw e
         }
     }
 }
