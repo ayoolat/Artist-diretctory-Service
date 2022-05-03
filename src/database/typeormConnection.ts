@@ -13,7 +13,7 @@ export class TypeormConnection {
     public async create() {
         try {
             this.dbConnect =  await createConnection()
-            console.log(this.dbConnect)
+            console.log(this.dbConnect.entityMetadatas)
             return this.dbConnect
         }catch (e : any) {
            throw e

@@ -1,11 +1,10 @@
 {
-    "type": "mongodb",
-    "host": "localhost",
-    "port": 27017,
-    "database" : "test",
-    "synchronize": true,
-    "logging": true,
-    "entities": [
-       "dist/entities/**/*.js"
-    ]
+  "type": "mongodb",
+  "url": "mongodb+srv://artistDirectory:Iamno.12@cluster0.u4yov.mongodb.net/test",
+  "useNewUrlParser": true,
+  "synchronize": true,
+  "logging": true,
+  "entities": [
+     "src/entities/**/*.ts"
+  ]
  }
