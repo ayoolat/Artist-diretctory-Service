@@ -4,18 +4,27 @@ import {Movies} from "../../entities/movies";
 import {EntityNotFoundError} from "typeorm";
 import {CharactersDTO} from "./dtos/charatersDTO";
 import {Character} from "../../entities/character";
+import {MoviesService} from "../moviesService/moviesService";
 const { ObjectID } = require('mongodb');
 
 export class CharactersService{
     private connection = TypeormConnection.instance.create()
 
+    constructor(private moviesService : MoviesService) {
+    }
+
     public async addCharacter(characterDto : CharactersDTO) : Promise<ResponseDTO<CharactersDTO>>{
         //Map movie DTO to movie entity first
-        const allMovies = characterDto.movies.map(movie => {
+        let allMovies : Movies[] = []
+
+        for (let movie of characterDto.movies){
             const movieEntity = new Movies(movie.title, movie.dateOfCreation)
             movieEntity._id = movie._id
-            return movieEntity
-        })
+
+            //Check if movie pass exists
+            await this.moviesService.findMovie(characterDto.movies && <string><unknown>movie._id)
+            allMovies.push(movieEntity)
+        }
 
         //Map full character DTO to character entity
         const character = new Character(characterDto.firstName, characterDto.lastName, characterDto.email, characterDto.gender, characterDto.phone, characterDto.address, characterDto.bio, characterDto.age, allMovies)
@@ -35,7 +44,7 @@ export class CharactersService{
             }
             throw new EntityNotFoundError(Character, "")
         }).catch(e => {
-            throw e
+            throw new Error(e)
         })
     }
 
@@ -82,7 +91,6 @@ export class CharactersService{
             }
             throw new EntityNotFoundError(Character, "Find all")
         }).catch(e => {
-            console.log(e)
             throw e
         })
     }

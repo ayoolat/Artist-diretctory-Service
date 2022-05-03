@@ -1,4 +1,4 @@
-import {DataSource, createConnection, getConnection, getConnectionManager} from 'typeorm';
+import {DataSource, createConnection} from 'typeorm';
 
 export class TypeormConnection {
     private dbConnect!: DataSource;
@@ -12,9 +12,7 @@ export class TypeormConnection {
 
     public async create() {
         try {
-            this.dbConnect =  await createConnection()
-            console.log(this.dbConnect.entityMetadatas)
-            return this.dbConnect
+            return this.dbConnect = await createConnection()
         }catch (e : any) {
            throw e
         }

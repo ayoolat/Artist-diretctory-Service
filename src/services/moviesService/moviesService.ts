@@ -3,6 +3,8 @@ import {MoviesDTO} from "./dtos/moviesDTO";
 import {ResponseDTO} from "../responseDTO";
 import {Movies} from "../../entities/movies";
 import {EntityNotFoundError} from "typeorm";
+const { ObjectID } = require('mongodb');
+
 
 export class MoviesService{
     private connection = TypeormConnection.instance.create()
@@ -74,6 +76,16 @@ export class MoviesService{
 
         }).catch(e => {
             throw e
+        })
+    }
+
+    public async findMovie(_id : string) : Promise<boolean> {
+        return this.connection.then(async(connection) =>{
+            const movie = await connection?.mongoManager.count(Movies, {_id : new ObjectID(_id)})
+            if(movie > 0)
+                return true
+
+            throw new EntityNotFoundError(Movies, _id)
         })
     }
 }
