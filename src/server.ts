@@ -33,7 +33,7 @@ export class Server {
         this.app.get("/api/v1/getAllCharacters", async (request, response) => await this.charactersController.getAllCharacter(response))
         this.app.get("/api/v1/searchById/:id", async (request, response) => await this.charactersController.getMovieById(request, response))
 
-        this.app.listen(8082, () => console.log("Server is listening"))
+        this.app.listen(process.env.PORT||8082, () => console.log("Server is listening"))
     }
 
     public validationMiddleWare(schema : Joi.ObjectSchema){
