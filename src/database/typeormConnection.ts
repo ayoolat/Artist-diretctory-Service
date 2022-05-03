@@ -12,7 +12,9 @@ export class TypeormConnection {
 
     public async create() {
         try {
-            return this.dbConnect =  await createConnection()
+            this.dbConnect =  await createConnection()
+            console.log(this.dbConnect)
+            return this.dbConnect
         }catch (e : any) {
            throw e
         }
