@@ -80,7 +80,10 @@ export class CharactersService{
                     error : false
                 }
             }
-            throw new EntityNotFoundError(Character, "")
+            throw new EntityNotFoundError(Character, "Find all")
+        }).catch(e => {
+            console.log(e)
+            throw e
         })
     }
 
